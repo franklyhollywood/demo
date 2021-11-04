@@ -40,13 +40,21 @@ describe('03_separation-of-concerns-demo routes', () => {
 
   it('updates an order by ID', () => {
     return request(app)
-      .update('/api/v1/orders/1')
+      .put('/api/v1/orders/1')
       .send({ id: 1, quantity: 11 })
       .then((res) => {
         expect(res.body).toEqual({
           id: '1',
-          quantity: 10,
+          quantity: 11,
         });
+      });
+  });
+
+  it('Deletes the order by ID', () => {
+    return request(app)
+      .delete('/api/v1/orders/1')
+      .then((res) => {
+        expect(res.body).toEqual('Not Found');
       });
   });
 });
