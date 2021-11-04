@@ -54,7 +54,7 @@ describe('03_separation-of-concerns-demo routes', () => {
     return request(app)
       .delete('/api/v1/orders/1')
       .then((res) => {
-        expect(res.body).toEqual('Not Found');
+        expect(res.body).toEqual({ id: '1', quantity: 11 });
       });
   });
 });
