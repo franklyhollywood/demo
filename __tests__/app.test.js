@@ -6,12 +6,12 @@ const app = require('../lib/app');
 
 jest.mock('twilio', () => () => ({
   messages: {
-    create: jest.fn()
-  }
+    create: jest.fn(),
+  },
 }));
 
 describe('03_separation-of-concerns-demo routes', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     return setup(pool);
   });
 
@@ -19,12 +19,42 @@ describe('03_separation-of-concerns-demo routes', () => {
     return request(app)
       .post('/api/v1/orders')
       .send({ quantity: 10 })
-      .then(res => {
+      .then((res) => {
         // expect(createMessage).toHaveBeenCalledTimes(1);
         expect(res.body).toEqual({
           id: '1',
-          quantity: 10
+          quantity: 10,
         });
+      });
+  });
+  it('responsds with an single order by ID', () => {
+    return request(app)
+      .get('/api/v1/orders/1')
+      .then((res) => {
+        expect(res.body).toEqual({
+          id: '1',
+          quantity: 10,
+        });
+      });
+  });
+
+  it('updates an order by ID', () => {
+    return request(app)
+      .put('/api/v1/orders/1')
+      .send({ id: 1, quantity: 11 })
+      .then((res) => {
+        expect(res.body).toEqual({
+          id: '1',
+          quantity: 11,
+        });
+      });
+  });
+
+  it('Deletes the order by ID', () => {
+    return request(app)
+      .delete('/api/v1/orders/1')
+      .then((res) => {
+        expect(res.body).toEqual({ id: '1', quantity: 11 });
       });
   });
 });
