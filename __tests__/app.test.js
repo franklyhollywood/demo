@@ -11,7 +11,7 @@ jest.mock('twilio', () => () => ({
 }));
 
 describe('03_separation-of-concerns-demo routes', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     return setup(pool);
   });
 
@@ -27,16 +27,14 @@ describe('03_separation-of-concerns-demo routes', () => {
         });
       });
   });
-  it('get responsds with an array of all orders', () => {
+  it('responsds with an single order by ID', () => {
     return request(app)
-      .get('/api/v1/orders')
+      .get('/api/v1/orders/1')
       .then((res) => {
-        expect(res.body).toEqual([
-          {
-            id: '1',
-            quantity: 10,
-          },
-        ]);
+        expect(res.body).toEqual({
+          id: '1',
+          quantity: 10,
+        });
       });
   });
 });
