@@ -49,7 +49,20 @@ describe('03_separation-of-concerns-demo routes', () => {
         });
       });
   });
-
+  it('responds with all orders', () => {
+    return request(app)
+      .get('/api/v1/orders/')
+      .then((res) => {
+        expect(res.body).toEqual(
+          expect.arrayContaining([
+            {
+              id: expect.any(String),
+              quantity: expect.any(Number),
+            },
+          ])
+        );
+      });
+  });
   it('Deletes the order by ID', () => {
     return request(app)
       .delete('/api/v1/orders/1')
