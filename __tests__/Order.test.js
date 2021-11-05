@@ -4,7 +4,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const OrderService = require('../lib/services/OrderService.js');
-const Order = require('../lib/models/order');
+const Order = require('../lib/models/Order');
 
 jest.mock('twilio', () => () => ({
   messages: {
